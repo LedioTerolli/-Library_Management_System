@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0e4a76cd-9627-44d8-a6c5-a0f7e974d3b7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/create_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/create_tables.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_book.txt" beforeDir="false" afterPath="$PROJECT_DIR$/new_book.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old_book.txt" beforeDir="false" afterPath="$PROJECT_DIR$/old_book.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Library_Management_System/Change_book_file.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Library_Management_System/Change_book_file.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Change_book_file.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Change_book_file.java" afterDir="false" />
-    </list>
+    <list default="true" id="0e4a76cd-9627-44d8-a6c5-a0f7e974d3b7" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
