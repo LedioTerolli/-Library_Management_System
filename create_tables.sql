@@ -47,6 +47,10 @@ CREATE TABLE employee (
   branch_id INT
 );
 
+update employee
+set branch_id = 100
+where emp_id = 1;
+
 CREATE TABLE branch (
   branch_id INT PRIMARY KEY,
   branch_name VARCHAR(40),
@@ -69,4 +73,6 @@ add foreign key(branch_id)
 references branch(branch_id)
 on delete set null;
 
-select * from patron;
+select * from employee;
+select * from branch;
+

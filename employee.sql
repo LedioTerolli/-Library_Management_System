@@ -1,0 +1,10 @@
+insert into employee (emp_id, first_name, last_name, dob, sex, salary, super_id, branch_id) values (1, 'Gavrielle', 'Duplock', '1925/03/06', 'F', 77665, 3, 4);
+insert into employee (emp_id, first_name, last_name, dob, sex, salary, super_id, branch_id) values (2, 'Adolpho', 'Absalom', '1954/08/07', 'M', 86626, 2, 2);
+insert into employee (emp_id, first_name, last_name, dob, sex, salary, super_id, branch_id) values (3, 'Waylin', 'Gresly', '1966/03/10', 'M', 88760, 2, 2);
+insert into employee (emp_id, first_name, last_name, dob, sex, salary, super_id, branch_id) values (4, 'Niki', 'Ryson', '1952/05/07', 'F', 69301, 1, 2);
+insert into employee (emp_id, first_name, last_name, dob, sex, salary, super_id, branch_id) values (5, 'Henri', 'Petyanin', '2004/09/25', 'M', 66096, 3, 1);
+insert into employee (emp_id, first_name, last_name, dob, sex, salary, super_id, branch_id) values (6, 'Fleur', 'Mingauld', '1998/07/30', 'F', 71818, 1, 1);
+insert into employee (emp_id, first_name, last_name, dob, sex, salary, super_id, branch_id) values (7, 'Alix', 'Baszkiewicz', '1991/11/26', 'M', 88928, 3, 2);
+insert into employee (emp_id, first_name, last_name, dob, sex, salary, super_id, branch_id) values (8, 'Melony', 'Peasnone', '1945/01/31', 'F', 85921, 2, 4);
+insert into employee (emp_id, first_name, last_name, dob, sex, salary, super_id, branch_id) values (9, 'Stavros', 'Shambroke', '1963/05/13', 'M', 81778, 2, 4);
+insert into employee (emp_id, first_name, last_name, dob, sex, salary, super_id, branch_id) values (10, 'Minnnie', 'Abyss', '1931/04/07', 'F', 81958, 3, 4);
