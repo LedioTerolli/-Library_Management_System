@@ -1,10 +1,17 @@
 import java.io.*;
-
-// used
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 
 public class Change_book_file {
     public static void main(String[] args) {
-        change_file("old_book", "new_book");
+        //change_file("old_book", "new_book");
+
+        boolean check = checkUnique(store_book_id("new_book"));
+        System.out.println(check);
+
+
     }
 
     public static void change_file(String old_file, String new_file) {
@@ -20,15 +27,15 @@ public class Change_book_file {
             while ((line = reader.readLine()) != null) {
                 String sub_str = line.substring(1, line.length() - 1);
                 String[] book_parts = sub_str.split("\",\"");
-                if(book_parts.length != 7) continue;
+                if (book_parts.length != 7) continue;
+                if (check_letter(book_parts[0])) continue;
 
                 nr_copies = (int) (Math.random() * 5) + 1;
 
                 for (int i = 1; i <= nr_copies; i++) {
                     StringBuilder str_b = new StringBuilder(); // outputting the serialized tree in this string
                     str_b.append("\"");
-                    String[] book_parts_copy = new String[book_parts.length];
-                    book_parts_copy = book_parts.clone();
+                    String[] book_parts_copy = book_parts.clone();
                     book_parts_copy[0] += Integer.toString(i);
 
                     for (int j = 0; j < interest_index.length; j++) {
@@ -56,5 +63,60 @@ public class Change_book_file {
         writer.newLine();
         writer.write(text_append.toString());
         writer.close();
+    }
+
+    public static boolean check_letter(String id) {
+        for (int i = 0; i < id.length(); i++) {
+            char current = id.charAt(i);
+            int y = Character.getNumericValue(current);
+            if (y > 9) return true;
+        }
+        return false;
+    }
+
+    public static boolean checkUnique(List<String> id_list) {
+        HashMap<String, Boolean> mapChar = new HashMap<>();
+        ListIterator a = id_list.listIterator();
+
+        for (int i = 0; i < id_list.size(); i++) {
+            String current = (String) a.next();
+            System.out.println(current);
+            Boolean flag = mapChar.get(current);
+            if (flag == null)
+                mapChar.put(current, true);
+            else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static List<String> store_book_id(String new_book) {
+
+        String line;
+        BufferedReader reader = null;
+
+        List<String> id_list = new LinkedList<>();
+
+        try {
+            File file = new File(new_book + ".txt");
+            reader = new BufferedReader(new FileReader(file));
+
+            while ((line = reader.readLine()) != null) {
+                String sub_str = line.substring(1, line.length() - 1);
+                String[] book_parts = sub_str.split("\",\"");
+                id_list.add(book_parts[0]);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return id_list;
     }
 }
