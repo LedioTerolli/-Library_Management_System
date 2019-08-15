@@ -7,11 +7,8 @@ import java.util.ListIterator;
 public class Change_book_file {
     public static void main(String[] args) {
         //change_file("old_book", "new_book");
-
-        boolean check = checkUnique(store_book_id("new_book"));
+        boolean check = check_unique(store_book_id("new_book"));
         System.out.println(check);
-
-
     }
 
     public static void change_file(String old_file, String new_file) {
@@ -28,7 +25,7 @@ public class Change_book_file {
                 String sub_str = line.substring(1, line.length() - 1);
                 String[] book_parts = sub_str.split("\",\"");
                 if (book_parts.length != 7) continue;
-                if (check_letter(book_parts[0])) continue;
+                if (check_for_letters(book_parts[0])) continue;
 
                 nr_copies = (int) (Math.random() * 5) + 1;
 
@@ -65,7 +62,7 @@ public class Change_book_file {
         writer.close();
     }
 
-    public static boolean check_letter(String id) {
+    public static boolean check_for_letters(String id) {
         for (int i = 0; i < id.length(); i++) {
             char current = id.charAt(i);
             int y = Character.getNumericValue(current);
@@ -74,7 +71,7 @@ public class Change_book_file {
         return false;
     }
 
-    public static boolean checkUnique(List<String> id_list) {
+    public static boolean check_unique(List<String> id_list) {
         HashMap<String, Boolean> mapChar = new HashMap<>();
         ListIterator a = id_list.listIterator();
 
