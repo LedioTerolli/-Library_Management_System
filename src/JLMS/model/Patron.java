@@ -1,4 +1,4 @@
-package JLMS;
+package JLMS.model;
 
 import java.sql.Date;
 
@@ -9,6 +9,18 @@ public class Patron {
     private String email;
     private String password;
     private Date dob;
+
+    public Patron() {
+    }
+
+    public Patron(String username, String first_name, String last_name, String email, String password, Date dob) {
+        this.username = username;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.password = password;
+        this.dob = dob;
+    }
 
     public String getUsername() {
         return username;
@@ -56,5 +68,16 @@ public class Patron {
 
     public void setDob(Date dob) {
         this.dob = dob;
+    }
+
+    @Override
+    public String toString() {
+        return "Patron{" +
+                "username='" + username + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", email='" + email + '\'' +
+                ", dob=" + dob +
+                '}';
     }
 }

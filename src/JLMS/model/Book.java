@@ -1,4 +1,4 @@
-package JLMS;
+package JLMS.model;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,6 +14,8 @@ public class Book {
     private boolean available;
     //private ArrayList<Loan> loan_log;
     //private Queue<Hold> hold_list;
+
+    public Book () {}
 
     public Book(int id, String cover_url, String title, String author, String category, int branch_id, boolean available) {
         this.id = id;
