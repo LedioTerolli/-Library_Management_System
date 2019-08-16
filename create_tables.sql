@@ -7,6 +7,11 @@ create table book (
     branch_id INT
 );
 
+alter table book
+add available BOOLEAN not null;
+
+select * from book;
+
 create table patron (
 	username varchar(40) primary key,
     first_name varchar(20),
