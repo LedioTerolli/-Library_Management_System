@@ -12,7 +12,8 @@ public interface BookDao {
     List<Book> get_by_title_author (String title, String author);
     List<Book> get_by_branch (String branch);
     List<Book> get_by_available (boolean available);
-    void create_book (Book book);
-    void update_book (Book book);
-    void delete_book (Book book);
+    void addBook(Book book) throws Exception;
+    void addBookList(List<Book> bookList) throws Exception;
+    void updateBook(Book book);
+    void deleteBook(Book book);
 }

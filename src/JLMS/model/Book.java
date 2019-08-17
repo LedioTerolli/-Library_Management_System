@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Book {
-    private int id;
+    private long id;
     private String cover_url;
     private String title;
     private String author;
@@ -17,7 +17,7 @@ public class Book {
 
     public Book () {}
 
-    public Book(int id, String cover_url, String title, String author, String category, int branch_id, boolean available) {
+    public Book(long id, String cover_url, String title, String author, String category, int branch_id, boolean available) {
         this.id = id;
         this.cover_url = cover_url;
         this.title = title;
@@ -29,7 +29,7 @@ public class Book {
         //hold_list = new LinkedList<Hold>();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

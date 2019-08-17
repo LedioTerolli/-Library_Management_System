@@ -5,9 +5,9 @@ import java.util.List;
 
 import JLMS.model.Book;
 import JLMS.dao.BookDao;
+import JLMS.DBConn;
 
 public class BookDaoImpl implements BookDao {
-
     public BookDaoImpl() throws SQLException {
     }
 
@@ -52,17 +52,57 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public void create_book(Book book) {
+    public void addBook(Book book) throws Exception {
+        try (Connection conn = DBConn.getConnection();
+             PreparedStatement statement = conn.prepareStatement("INSERT INTO book VALUES(?,?,?,?,?,?,?)")
+        ) {
+            statement.setLong(1,book.getId());
+            statement.setString(2,book.getCover_url());
+            statement.setString(3,book.getTitle());
+            statement.setString(4,book.getAuthor());
+            statement.setString(5,book.getCategory());
+            statement.setInt(6,book.getBranch_id());
+            statement.setBoolean(7,book.isAvailable());
+            statement.executeUpdate();
+            conn.commit();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    public void addBookList(List<Book> bookList) throws Exception {
+        try (Connection conn = DBConn.getConnection();
+             PreparedStatement statement = conn.prepareStatement("INSERT INTO book VALUES(?,?,?,?,?,?,?)")
+        ) {
+            conn.setAutoCommit(false);
+
+            for (Book book: bookList) {
+                System.out.println(book.toString());
+                statement.setLong(1,book.getId());
+                statement.setString(2,book.getCover_url());
+                statement.setString(3,book.getTitle());
+                statement.setString(4,book.getAuthor());
+                statement.setString(5,book.getCategory());
+                statement.setInt(6,book.getBranch_id());
+                statement.setBoolean(7,book.isAvailable());
+                statement.executeUpdate();
+                conn.commit();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        
+    }
+
+    @Override
+    public void updateBook(Book book) {
+
 
     }
 
     @Override
-    public void update_book(Book book) {
-
-    }
-
-    @Override
-    public void delete_book(Book book) {
+    public void deleteBook(Book book) {
 
     }
 }

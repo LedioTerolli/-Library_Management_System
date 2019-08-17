@@ -8,9 +8,9 @@ import java.util.ListIterator;
 
 public class Change_book_file {
     public static void main(String[] args) {
-        //change_file("old_book", "new_book");
-        boolean check = check_unique(store_book_id("new_book"));
-        System.out.println(check);
+        change_file("old_book", "new_book");
+        //boolean check = check_unique(store_book_id("new_book"));
+        //System.out.println(check);
     }
 
     public static void change_file(String old_file, String new_file) {
@@ -28,6 +28,7 @@ public class Change_book_file {
                 String[] book_parts = sub_str.split("\",\"");
                 if (book_parts.length != 7) continue;
                 if (check_for_letters(book_parts[0])) continue;
+                if (book_parts[3].length() > 100) continue;
 
                 nr_copies = (int) (Math.random() * 5) + 1;
 
