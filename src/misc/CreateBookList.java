@@ -14,9 +14,14 @@ public class CreateBookList {
         List<Book> bookList = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file + ".txt"))) {
+            int random_branch_no;
+
             while ((line = reader.readLine()) != null) {
                 String sub_str = line.substring(1, line.length() - 1);
                 String[] book_parts = sub_str.split("\",\"");
+
+                 random_branch_no = (int) (Math.random() * 3) + 2;
+
 
                 Book newBook = new Book(
                         Long.parseLong(book_parts[0]),
@@ -24,7 +29,7 @@ public class CreateBookList {
                         book_parts[2],
                         book_parts[3],
                         book_parts[4],
-                        1,
+                        random_branch_no,
                         true);
 
                 bookList.add(newBook);

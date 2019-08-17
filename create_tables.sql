@@ -8,13 +8,17 @@ select * from patron;
 create table book (
 	id BIGINT primary key,
     cover_url varchar(100),
-    title varchar (100),
+    title varchar (150),
     author varchar(100),
     category varchar(50),
     branch_id INT,
     available BOOLEAN NOT NULL
 );
 
+delete from book;
+
+alter table book
+modify title varchar(100);
 
 create table patron (
 	username varchar(40) primary key,

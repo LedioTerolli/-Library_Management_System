@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class Change_book_file {
+public class ChangeBookFile {
     public static void main(String[] args) {
         change_file("old_book", "new_book");
         //boolean check = check_unique(store_book_id("new_book"));

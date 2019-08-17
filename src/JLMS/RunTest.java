@@ -3,22 +3,34 @@ import JLMS.dao.BookDao;
 import JLMS.daoimpl.*;
 import JLMS.model.Book;
 import misc.CreateBookList;
-import misc.CreateBookList.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-public class Main {
+public class RunTest {
     public static void main(String[] args) throws Exception {
+        long startTime = System.nanoTime();
 
         //BookDao dune = new BookDaoImpl();
         //dune.addBook(new Book(44101359, "", "Dune", "Frank Herbert", "Science fiction", 1, true ));
 
-        List<Book> bookList = CreateBookList.createList("new_book");
-        BookDao listOfBooks = new BookDaoImpl();
-        listOfBooks.addBookList(bookList);
+        //List<Book> bookList = CreateBookList.createList("new_book");
+        //BookDao listOfBooks = new BookDaoImpl();
+        //listOfBooks.addBookList(bookList);
 
+        //BookDao getById = new BookDaoImpl();
+        //Book result = getById.get_by_id(72628331);
+        //System.out.println(result.toString());
+
+        //Set<Book> bookSet = new HashSet<>(bookList);
+        //BookDao getAllBooks = new BookDaoImpl();
+        //List<Book> result = getAllBooks.get_all();
+        //for (Book e: result) {
+        //    if (bookList.contains(e)) System.out.println("not found");
+        //}
+
+        long endTime   = System.nanoTime();
+        long totalTime = endTime - startTime;
+        System.out.println(totalTime);
     }
 
     public void listStats (List<Book> bookList) {
