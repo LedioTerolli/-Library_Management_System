@@ -12,10 +12,12 @@ public class BookDaoImpl implements BookDao {
     public BookDaoImpl() throws SQLException {
     }
 
+    //----------------------- GET ----------------------------------------------------------------
+
     @Override
-    public Book get_by_id(long id) throws Exception {
+    public Book getByID(long id) throws Exception {
         ResultSet rs;
-        Book result = null;
+        Book foundBook = null;
 
         try (Connection conn = DBConn.getConnection();
              PreparedStatement statement = conn.prepareStatement("SELECT * FROM book WHERE id = ?")
@@ -26,29 +28,22 @@ public class BookDaoImpl implements BookDao {
             rs = statement.getResultSet();
             if (!rs.isBeforeFirst()) {
                 System.out.println("Book not found in database!");
-                return result;
+                return foundBook;
             } else {
                 rs.next();
-                result = new Book(
-                        rs.getLong("id"),
-                        rs.getString("cover_url"),
-                        rs.getString("title"),
-                        rs.getString("author"),
-                        rs.getString("category"),
-                        rs.getInt("branch_id"),
-                        rs.getBoolean("available"));
+                foundBook = extractBook(rs);
             }
             conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return result;
+        return foundBook;
     }
 
     @Override
-    public List<Book> get_all() throws Exception {
-        List<Book> result = new ArrayList<>();
+    public List getAll() throws Exception {
+        List<Book> bookList = new ArrayList<>();
         ResultSet rs;
         Book currentBook;
 
@@ -60,30 +55,22 @@ public class BookDaoImpl implements BookDao {
             rs = statement.getResultSet();
             if (!rs.isBeforeFirst()) {
                 System.out.println("No data found!");
-                return result;
+                return bookList;
             } else {
                 while (rs.next()) {
-                    currentBook = new Book(
-                            rs.getLong("id"),
-                            rs.getString("cover_url"),
-                            rs.getString("title"),
-                            rs.getString("author"),
-                            rs.getString("category"),
-                            rs.getInt("branch_id"),
-                            rs.getBoolean("available"));
-                    result.add(currentBook);
+                    currentBook = extractBook(rs);
+                    bookList.add(currentBook);
                 }
             }
             conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return result;
+        return bookList;
     }
 
     @Override
-    public List<Book> get_by_title(String title) throws Exception {
+    public List<Book> getByTitle(String title) throws Exception {
         ResultSet rs = null;
         Book currentBook = null;
         List<Book> bookList = new ArrayList<>();
@@ -96,20 +83,11 @@ public class BookDaoImpl implements BookDao {
             ps.execute();
             rs = ps.getResultSet();
 
-            if(!rs.isBeforeFirst()) {
-                System.out.println("No results");
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No results.");
             } else {
                 while (rs.next()) {
-                    currentBook = new Book(
-                            rs.getLong("id"),
-                            rs.getString("cover_url"),
-                            rs.getString("title"),
-                            rs.getString("author"),
-                            rs.getString("category"),
-                            rs.getInt("branch_id"),
-                            rs.getBoolean("available")
-                    );
-
+                    currentBook = extractBook(rs);
                     bookList.add(currentBook);
                 }
             }
@@ -122,42 +100,136 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> get_by_author(String author) {
-        return null;
+    public List<Book> getByAuthor(String author) throws Exception {
+        ResultSet rs;
+        Book currentBook;
+        List<Book> bookList = new ArrayList<>();
+        try (
+                Connection conn = DBConn.getConnection();
+                PreparedStatement ps = conn.prepareStatement("SELECT * FROM book WHERE author = ?")
+        ) {
+            conn.setAutoCommit(false);
+            ps.setString(1, author);
+            ps.execute();
+            rs = ps.getResultSet();
+
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No results.");
+            } else {
+                while (rs.next()) {
+                    currentBook = extractBook(rs);
+                    bookList.add(currentBook);
+                }
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return bookList;
     }
 
     @Override
-    public List<Book> get_by_category(String category) {
-        return null;
+    public List<Book> getByCategory(String category) throws Exception {
+        ResultSet rs;
+        Book currentBook;
+        List<Book> bookList = new ArrayList<>();
+        try (
+                Connection conn = DBConn.getConnection();
+                PreparedStatement ps = conn.prepareStatement("SELECT * FROM book WHERE category = ?")
+        ) {
+            conn.setAutoCommit(false);
+            ps.setString(1, category);
+            ps.execute();
+            rs = ps.getResultSet();
+
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No results.");
+            } else {
+                while (rs.next()) {
+                    currentBook = extractBook(rs);
+                    bookList.add(currentBook);
+                }
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return bookList;
     }
 
     @Override
-    public List<Book> get_by_title_author(String title, String author) {
-        return null;
+    public List<Book> getByBranch(String branch) throws Exception {
+        ResultSet rs;
+        Book currentBook;
+        List<Book> bookList = new ArrayList<>();
+        try (
+                Connection conn = DBConn.getConnection();
+                PreparedStatement ps = conn.prepareStatement("SELECT * FROM book WHERE branch_id = ?")
+        ) {
+            conn.setAutoCommit(false);
+            ps.setString(1, branch);
+            ps.execute();
+            rs = ps.getResultSet();
+
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No results.");
+            } else {
+                while (rs.next()) {
+                    currentBook = extractBook(rs);
+                    bookList.add(currentBook);
+                }
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return bookList;
     }
 
     @Override
-    public List<Book> get_by_branch(String branch) {
-        return null;
+    public List<Book> getByAvailable() throws Exception {
+        ResultSet rs;
+        Book currentBook;
+        List<Book> bookList = new ArrayList<>();
+        try (
+                Connection conn = DBConn.getConnection();
+                PreparedStatement ps = conn.prepareStatement("SELECT * FROM book WHERE available = true")
+        ) {
+            conn.setAutoCommit(false);
+            ps.execute();
+            rs = ps.getResultSet();
+
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No results.");
+            } else {
+                while (rs.next()) {
+                    currentBook = extractBook(rs);
+                    bookList.add(currentBook);
+                }
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return bookList;
     }
 
-    @Override
-    public List<Book> get_by_available(boolean available) {
-        return null;
-    }
+
+    //----------------------- ADD ---------------------------------------------------------------
 
     @Override
-    public void addBook(Book book) throws Exception {
+    public void add(Object objBook) throws Exception {
+        Book book = (Book) objBook;
+
         try (Connection conn = DBConn.getConnection();
              PreparedStatement statement = conn.prepareStatement("INSERT INTO book VALUES(?,?,?,?,?,?,?)")
         ) {
-            statement.setLong(1, book.getId());
-            statement.setString(2, book.getCover_url());
-            statement.setString(3, book.getTitle());
-            statement.setString(4, book.getAuthor());
-            statement.setString(5, book.getCategory());
-            statement.setInt(6, book.getBranch_id());
-            statement.setBoolean(7, book.isAvailable());
+            conn.setAutoCommit(false);
+            buildStatement(book, statement);
             statement.executeUpdate();
             conn.commit();
         } catch (SQLException e) {
@@ -171,22 +243,14 @@ public class BookDaoImpl implements BookDao {
              PreparedStatement statement = conn.prepareStatement("INSERT INTO book VALUES(?,?,?,?,?,?,?)")
         ) {
             conn.setAutoCommit(false);
-
-            int i = 1;
+            int counter = 1;
+            int bookListSize = bookList.size();
 
             for (Book book : bookList) {
-                //System.out.println(book.toString());
-                System.out.println(i + "/" + bookList.size());
-                statement.setLong(1, book.getId());
-                statement.setString(2, book.getCover_url());
-                statement.setString(3, book.getTitle());
-                statement.setString(4, book.getAuthor());
-                statement.setString(5, book.getCategory());
-                statement.setInt(6, book.getBranch_id());
-                statement.setBoolean(7, book.isAvailable());
+                buildStatement(book, statement);
                 statement.executeUpdate();
                 conn.commit();
-                i++;
+                counter++;
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -194,15 +258,72 @@ public class BookDaoImpl implements BookDao {
 
     }
 
+    //----------------------- UPDATE -------------------------------------------------------------
+
     @Override
-    public void updateBookId(Book book) {
+    public void update(Object objBook) throws Exception {
+        Book book = (Book) objBook;
 
-
+        try (Connection conn = DBConn.getConnection();
+             PreparedStatement statement = conn.prepareStatement(
+                     "UPDATE BOOK SET " +
+                             "ID = ?, " +
+                             "COVER_URL = ?, " +
+                             "TITLE = ?, " +
+                             "AUTHOR = ?, " +
+                             "CATEGORY = ?, " +
+                             "BRANCH_ID = ?, " +
+                             "AVAILABLE = ? " +
+                             "WHERE ID = ? "
+             )
+        ) {
+            conn.setAutoCommit(false);
+            buildStatement(book, statement);
+            statement.setLong(8, book.getId());
+            statement.executeUpdate();
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void deleteBook(Book book) {
+    //----------------------- DELETE -------------------------------------------------------------
 
+    @Override
+    public void delete(Object objBook) throws Exception {
+        Book book = (Book) objBook;
+        try (Connection conn = DBConn.getConnection();
+             PreparedStatement statement = conn.prepareStatement("DELETE FROM BOOK WHERE ID = ?")
+        ) {
+            statement.setLong(1, book.getId());
+            conn.commit();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    //----------------------- HELPER METHODS -----------------------------------------------------
+
+    private void buildStatement(Book book, PreparedStatement statement) throws SQLException {
+        statement.setLong(1, book.getId());
+        statement.setString(2, book.getCover_url());
+        statement.setString(3, book.getTitle());
+        statement.setString(4, book.getAuthor());
+        statement.setString(5, book.getCategory());
+        statement.setInt(6, book.getBranch_id());
+        statement.setBoolean(7, book.isAvailable());
+    }
+
+    private Book extractBook(ResultSet rs) throws SQLException {
+        Book book = new Book(
+                rs.getLong("id"),
+                rs.getString("cover_url"),
+                rs.getString("title"),
+                rs.getString("author"),
+                rs.getString("category"),
+                rs.getInt("branch_id"),
+                rs.getBoolean("available"));
+        return book;
     }
 }
 

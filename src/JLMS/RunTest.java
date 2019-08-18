@@ -13,7 +13,8 @@ public class RunTest {
 /*
         ------------------------ADD BOOK
         BookDao dune = new BookDaoImpl();
-        dune.addBook(new Book(44101359, "", "Dune", "Frank Herbert", "Science fiction", 1, true ))
+        dune.add(new Book(44101359, "", "Dune", "Frank Herbert", "Science fiction", 1, true ));
+
         ------------------------ADD BOOK LIST
         List<Book> bookList = CreateBookList.createList("new_book");
         BookDao listOfBooks = new BookDaoImpl();
@@ -37,8 +38,13 @@ public class RunTest {
         for (Book e: getTitle.get_by_title("Seeing")) {
             System.out.println(e.toString());
         }
-*/
 
+        -------------------------ADD UPDATE DELETE
+
+        BookDao getAvailable = new BookDaoImpl();
+        getAvailable.update(new Book(44101359, "", "Dune", "Frank Herbert", "Science fiction", 2, true));
+        System.out.println(getAvailable.getByID(44101359).toString());
+*/
         long endTime = System.nanoTime();
         long totalTime = endTime - startTime;
         System.out.println(totalTime);

@@ -3,19 +3,15 @@ package JLMS.dao;
 import JLMS.model.*;
 import java.util.List;
 
-public interface BookDao {
+public interface BookDao extends GenericDao{
 
-    Book get_by_id (long id) throws Exception;
-    List<Book> get_all() throws Exception;
-    List<Book> get_by_title (String title) throws Exception;
-    List<Book> get_by_author (String author);
-    List<Book> get_by_category (String category);
-    List<Book> get_by_title_author (String title, String author);
-    List<Book> get_by_branch (String branch);
-    List<Book> get_by_available (boolean available);
-    void addBook(Book book) throws Exception;
+    Book getByID(long id) throws Exception;
+    List<Book> getByTitle(String title) throws Exception;
+    List<Book> getByAuthor(String author) throws Exception;
+    List<Book> getByCategory(String category) throws Exception;
+    List<Book> getByBranch(String branch) throws Exception;
+    List<Book> getByAvailable() throws Exception;
+
     void addBookList(List<Book> bookList) throws Exception;
 
-    void updateBookId(Book book);
-    void deleteBook(Book book);
 }

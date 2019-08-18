@@ -7,17 +7,17 @@ public class Loan {
     private String patron_username;
     private Date start_date;
     private Date due_date;
-    private double cost;
+    private double fine;
 
     public Loan() {
     }
 
-    public Loan(int book_id, String patron_username, Date start_date, Date due_date, double cost) {
+    public Loan(int book_id, String patron_username, Date start_date, Date due_date, double fine) {
         this.book_id = book_id;
         this.patron_username = patron_username;
         this.start_date = start_date;
         this.due_date = due_date;
-        this.cost = cost;
+        this.fine = fine;
     }
 
     public int getBook_id() {
@@ -52,12 +52,12 @@ public class Loan {
         this.due_date = due_date;
     }
 
-    public double getCost() {
-        return cost;
+    public double getFine() {
+        return fine;
     }
 
-    public void setCost(double cost) {
-        this.cost = cost;
+    public void setFine(double fine) {
+        this.fine = fine;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Loan {
                 ", patron_username='" + patron_username + '\'' +
                 ", start_date=" + start_date +
                 ", due_date=" + due_date +
-                ", cost=" + cost +
+                ", cost=" + fine +
                 '}';
     }
 }
