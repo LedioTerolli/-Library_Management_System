@@ -7,7 +7,7 @@ public interface BookDao {
 
     Book get_by_id (long id) throws Exception;
     List<Book> get_all() throws Exception;
-    List<Book> get_by_title (String title);
+    List<Book> get_by_title (String title) throws Exception;
     List<Book> get_by_author (String author);
     List<Book> get_by_category (String category);
     List<Book> get_by_title_author (String title, String author);

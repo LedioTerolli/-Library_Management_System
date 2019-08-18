@@ -1,4 +1,5 @@
 package JLMS;
+
 import JLMS.dao.BookDao;
 import JLMS.daoimpl.*;
 import JLMS.model.Book;
@@ -9,31 +10,41 @@ import java.util.*;
 public class RunTest {
     public static void main(String[] args) throws Exception {
         long startTime = System.nanoTime();
+/*
+        ------------------------ADD BOOK
+        BookDao dune = new BookDaoImpl();
+        dune.addBook(new Book(44101359, "", "Dune", "Frank Herbert", "Science fiction", 1, true ))
+        ------------------------ADD BOOK LIST
+        List<Book> bookList = CreateBookList.createList("new_book");
+        BookDao listOfBooks = new BookDaoImpl();
+        listOfBooks.addBookList(bookList);
 
-        //BookDao dune = new BookDaoImpl();
-        //dune.addBook(new Book(44101359, "", "Dune", "Frank Herbert", "Science fiction", 1, true ));
+        -------------------------GET BY ID
+        BookDao getById = new BookDaoImpl();
+        Book result = getById.get_by_id(72628335);
+        System.out.println(result.toString());
 
-        //List<Book> bookList = CreateBookList.createList("new_book");
-        //BookDao listOfBooks = new BookDaoImpl();
-        //listOfBooks.addBookList(bookList);
+        ------------------------GET ALL BOOKS
+        Set<Book> bookSet = new HashSet<>(bookList);
+        BookDao getAllBooks = new BookDaoImpl();
+        List<Book> result = getAllBooks.get_all();
+        for (Book e: result) {
+            if (bookList.contains(e)) System.out.println("not found");
+        }
 
-        //BookDao getById = new BookDaoImpl();
-        //Book result = getById.get_by_id(72628331);
-        //System.out.println(result.toString());
+        -------------------------GET BY TITLE
+        BookDao getTitle = new BookDaoImpl();
+        for (Book e: getTitle.get_by_title("Seeing")) {
+            System.out.println(e.toString());
+        }
+*/
 
-        //Set<Book> bookSet = new HashSet<>(bookList);
-        //BookDao getAllBooks = new BookDaoImpl();
-        //List<Book> result = getAllBooks.get_all();
-        //for (Book e: result) {
-        //    if (bookList.contains(e)) System.out.println("not found");
-        //}
-
-        long endTime   = System.nanoTime();
+        long endTime = System.nanoTime();
         long totalTime = endTime - startTime;
         System.out.println(totalTime);
     }
 
-    public void listStats (List<Book> bookList) {
+    public void listStats(List<Book> bookList) {
         int i = 0;
         int max = 0;
         int sum = 0;
@@ -47,7 +58,7 @@ public class RunTest {
                 max = current;
             }
 
-            if( current < 50) less++;
+            if (current < 50) less++;
             else more++;
 
             sum += current;
@@ -57,6 +68,6 @@ public class RunTest {
         System.out.println(max);
         System.out.println("less: " + less);
         System.out.println("more: " + more);
-        System.out.println("average: " + sum*1.0/i);
+        System.out.println("average: " + sum * 1.0 / i);
     }
 }

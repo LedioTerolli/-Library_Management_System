@@ -22,25 +22,21 @@ public class BookDaoImpl implements BookDao {
         ) {
             conn.setAutoCommit(false);
             statement.setLong(1, id);
-            if (!statement.execute()) {
+            statement.execute();
+            rs = statement.getResultSet();
+            if (!rs.isBeforeFirst()) {
+                System.out.println("Book not found in database!");
                 return result;
             } else {
-                rs = statement.getResultSet();
-
-                if (!rs.isBeforeFirst()) {
-                    System.out.println("Book not found in database!");
-                    return result;
-                } else {
-                    rs.next();
-                    result = new Book(
-                            rs.getLong("id"),
-                            rs.getString("cover_url"),
-                            rs.getString("title"),
-                            rs.getString("author"),
-                            rs.getString("category"),
-                            rs.getInt("branch_id"),
-                            rs.getBoolean("available"));
-                }
+                rs.next();
+                result = new Book(
+                        rs.getLong("id"),
+                        rs.getString("cover_url"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getString("category"),
+                        rs.getInt("branch_id"),
+                        rs.getBoolean("available"));
             }
             conn.commit();
         } catch (SQLException e) {
@@ -60,25 +56,22 @@ public class BookDaoImpl implements BookDao {
              PreparedStatement statement = conn.prepareStatement("SELECT * FROM book")
         ) {
             conn.setAutoCommit(false);
-            if (!statement.execute()) {
+            statement.execute();
+            rs = statement.getResultSet();
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No data found!");
                 return result;
             } else {
-                rs = statement.getResultSet();
-                if (!rs.isBeforeFirst()) {
-                    System.out.println("No data found!");
-                    return result;
-                } else {
-                    while (rs.next()) {
-                        currentBook = new Book(
-                                rs.getLong("id"),
-                                rs.getString("cover_url"),
-                                rs.getString("title"),
-                                rs.getString("author"),
-                                rs.getString("category"),
-                                rs.getInt("branch_id"),
-                                rs.getBoolean("available"));
-                        result.add(currentBook);
-                    }
+                while (rs.next()) {
+                    currentBook = new Book(
+                            rs.getLong("id"),
+                            rs.getString("cover_url"),
+                            rs.getString("title"),
+                            rs.getString("author"),
+                            rs.getString("category"),
+                            rs.getInt("branch_id"),
+                            rs.getBoolean("available"));
+                    result.add(currentBook);
                 }
             }
             conn.commit();
@@ -90,8 +83,42 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> get_by_title(String title) {
-        return null;
+    public List<Book> get_by_title(String title) throws Exception {
+        ResultSet rs = null;
+        Book currentBook = null;
+        List<Book> bookList = new ArrayList<>();
+        try (
+                Connection conn = DBConn.getConnection();
+                PreparedStatement ps = conn.prepareStatement("SELECT * FROM book WHERE title = ?")
+        ) {
+            conn.setAutoCommit(false);
+            ps.setString(1, title);
+            ps.execute();
+            rs = ps.getResultSet();
+
+            if(!rs.isBeforeFirst()) {
+                System.out.println("No results");
+            } else {
+                while (rs.next()) {
+                    currentBook = new Book(
+                            rs.getLong("id"),
+                            rs.getString("cover_url"),
+                            rs.getString("title"),
+                            rs.getString("author"),
+                            rs.getString("category"),
+                            rs.getInt("branch_id"),
+                            rs.getBoolean("available")
+                    );
+
+                    bookList.add(currentBook);
+                }
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return bookList;
     }
 
     @Override
