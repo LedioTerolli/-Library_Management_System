@@ -247,6 +247,7 @@ public class BookDaoImpl implements BookDao {
             int bookListSize = bookList.size();
 
             for (Book book : bookList) {
+                System.out.println(counter + "/" + bookListSize);
                 buildStatement(book, statement);
                 statement.executeUpdate();
                 conn.commit();

@@ -19,9 +19,7 @@ public class CreateBookList {
             while ((line = reader.readLine()) != null) {
                 String sub_str = line.substring(1, line.length() - 1);
                 String[] book_parts = sub_str.split("\",\"");
-
-                 random_branch_no = (int) (Math.random() * 3) + 2;
-
+                random_branch_no = (int) (Math.random() * 3) + 101;
 
                 Book newBook = new Book(
                         Long.parseLong(book_parts[0]),

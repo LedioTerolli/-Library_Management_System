@@ -40,14 +40,15 @@ public class RunTest {
         }
 
         -------------------------ADD UPDATE DELETE
-
         BookDao getAvailable = new BookDaoImpl();
         getAvailable.update(new Book(44101359, "", "Dune", "Frank Herbert", "Science fiction", 2, true));
         System.out.println(getAvailable.getByID(44101359).toString());
 */
+
         long endTime = System.nanoTime();
         long totalTime = endTime - startTime;
-        System.out.println(totalTime);
+        double ftime = totalTime/1000000000.0;
+        System.out.println(ftime + "sec.");
     }
 
     public void listStats(List<Book> bookList) {
