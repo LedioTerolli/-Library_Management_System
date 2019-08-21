@@ -2,10 +2,22 @@ SELECT * FROM EMPLOYEE;
 SELECT * FROM BRANCH;
 SELECT * FROM BOOK;
 SELECT * FROM LOAN;
-SELECT * FROM HOLD;
+SELECT * FROM HOLDS;
 SELECT * FROM PATRON;
 
-SELECT * FROM BOOK WHERE ID = 33;
+select branch_name from branch
+where branch.branch_id in (
+	select branch_id from book
+	where id = 21827185
+);
+
+select book.id, book.author, book.title, branch.branch_name from book
+left join branch on book.branch_id = branch.branch_id;
+order by book.title;
+
+select book.id, book.branch_id, branch.branch_id, branch.branch_name from book
+left join branch on book.branch_id = branch.branch_id
+order by book.title;
 
 CREATE TABLE BOOK (
 	ID BIGINT PRIMARY KEY,
@@ -16,13 +28,6 @@ CREATE TABLE BOOK (
     BRANCH_ID INT,
     AVAILABLE BOOLEAN NOT NULL
 );
-
-DELETE FROM BOOK WHERE ID = 44101359;
-SELECT title FROM BOOK WHERE available = true;
-
-
-ALTER TABLE BOOK
-MODIFY TITLE VARCHAR(100);
 
 CREATE TABLE PATRON (
 	USERNAME VARCHAR(40) PRIMARY KEY,
@@ -43,8 +48,6 @@ CREATE TABLE LOAN (
     FOREIGN KEY(BOOK_ID) REFERENCES BOOK(ID) ON DELETE CASCADE,
 	FOREIGN KEY(PATRON_USERNAME) REFERENCES PATRON(USERNAME) ON DELETE SET NULL
 );
-
-DROP TABLE LOAN;
 
 CREATE TABLE HOLD (
 	BOOK_ID BIGINT,
@@ -82,4 +85,9 @@ CREATE TABLE BRANCH (
 ALTER TABLE EMPLOYEE
 ADD FOREIGN KEY(BRANCH_ID)
 REFERENCES BRANCH(BRANCH_ID)
+ON DELETE SET NULL;
+
+ALTER TABLE book
+ADD FOREIGN KEY(BRANCH_ID)
+REFERENCES branch(BRANCH_ID)
 ON DELETE SET NULL;

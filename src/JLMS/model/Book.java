@@ -12,8 +12,6 @@ public class Book {
     private String category;
     private int branch_id;
     private boolean available;
-    //private ArrayList<Loan> loan_log;
-    //private Queue<Hold> hold_list;
 
     public Book () {}
 
