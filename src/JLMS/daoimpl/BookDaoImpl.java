@@ -15,33 +15,6 @@ public class BookDaoImpl implements BookDao {
     //----------------------- GET ----------------------------------------------------------------
 
     @Override
-    public Book getByID(long id) throws Exception {
-        ResultSet rs;
-        Book foundBook = null;
-
-        try (Connection conn = DBConn.getConnection();
-             PreparedStatement statement = conn.prepareStatement("SELECT * FROM book WHERE id = ?")
-        ) {
-            conn.setAutoCommit(false);
-            statement.setLong(1, id);
-            statement.execute();
-            rs = statement.getResultSet();
-            if (!rs.isBeforeFirst()) {
-                System.out.println("Book not found in database!");
-                return foundBook;
-            } else {
-                rs.next();
-                foundBook = extractBook(rs);
-            }
-            conn.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return foundBook;
-    }
-
-    @Override
     public List getAll() throws Exception {
         List<Book> bookList = new ArrayList<>();
         ResultSet rs;
@@ -68,6 +41,34 @@ public class BookDaoImpl implements BookDao {
         }
         return bookList;
     }
+
+    @Override
+    public Book getByID(long id) throws Exception {
+        ResultSet rs;
+        Book foundBook = null;
+
+        try (Connection conn = DBConn.getConnection();
+             PreparedStatement statement = conn.prepareStatement("SELECT * FROM book WHERE id = ?")
+        ) {
+            conn.setAutoCommit(false);
+            statement.setLong(1, id);
+            statement.execute();
+            rs = statement.getResultSet();
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No results.");
+                return foundBook;
+            } else {
+                rs.next();
+                foundBook = extractBook(rs);
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return foundBook;
+    }
+
 
     @Override
     public List<Book> getByTitle(String title) throws Exception {

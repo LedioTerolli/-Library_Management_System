@@ -1,8 +1,10 @@
 package JLMS;
 
 import JLMS.dao.BookDao;
+import JLMS.dao.PatronDao;
 import JLMS.daoimpl.*;
 import JLMS.model.Book;
+import JLMS.model.Patron;
 import misc.CreateBookList;
 
 import java.util.*;
@@ -43,7 +45,21 @@ public class RunTest {
         BookDao getAvailable = new BookDaoImpl();
         getAvailable.update(new Book(44101359, "", "Dune", "Frank Herbert", "Science fiction", 2, true));
         System.out.println(getAvailable.getByID(44101359).toString());
+
+        -------------------------GET ALL PATRON
+
+        PatronDao getall = new PatronDaoImpl();
+        List<Patron> result = getall.getAll();
+        for (Patron e: result) {
+            System.out.println(e);
+        }
 */
+
+        PatronDao patronDao = new PatronDaoImpl();
+        List<Patron> result = patronDao.getByFirst_name("Ashley");
+        for (Patron e: result) {
+            System.out.println(e);
+        }
 
         long endTime = System.nanoTime();
         long totalTime = endTime - startTime;
