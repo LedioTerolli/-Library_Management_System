@@ -12,7 +12,6 @@ public class PatronDaoImpl implements PatronDao {
     public PatronDaoImpl() throws SQLException {
     }
 
-
     @Override
     public List getAll() throws Exception {
         List<Patron> patronList = new ArrayList<>();

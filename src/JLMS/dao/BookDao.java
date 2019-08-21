@@ -1,6 +1,6 @@
 package JLMS.dao;
 
-import JLMS.model.*;
+import JLMS.model.Book;
 
 import java.util.List;
 

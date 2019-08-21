@@ -7,7 +7,7 @@ public class Employee {
     private String first_name;
     private String last_name;
     private Date dob;
-    private char sex;
+    private String sex;
     private int salary;
     private int super_id;
     private int branch_id;
@@ -15,7 +15,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(int emp_id, String first_name, String last_name, Date dob, char sex, int salary, int super_id, int branch_id) {
+    public Employee(int emp_id, String first_name, String last_name, Date dob, String sex, int salary, int super_id, int branch_id) {
         this.emp_id = emp_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -58,11 +58,11 @@ public class Employee {
         this.dob = dob;
     }
 
-    public char getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(char sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
