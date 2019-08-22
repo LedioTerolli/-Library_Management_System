@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoanDaoImpl implements LoanDao {
+    public LoanDaoImpl() {
+    }
 
-    public LoanDaoImpl(){}
+    //----------------------- GET ----------------------------------------------------------------
 
     @Override
     public List getAll() throws Exception {
@@ -180,8 +182,10 @@ public class LoanDaoImpl implements LoanDao {
         try (Connection conn = DBConn.getConnection();
              PreparedStatement statement = conn.prepareStatement("DELETE FROM LOAN WHERE book_id = ?")
         ) {
+            conn.setAutoCommit(false);
             statement.setInt(1, loan.getBook_id());
-            statement.executeUpdate();
+            int rows_affected = statement.executeUpdate();
+            if (rows_affected == 0) System.out.println("Not found!");
             conn.commit();
         } catch (SQLException e) {
             System.out.println(e);
@@ -193,8 +197,8 @@ public class LoanDaoImpl implements LoanDao {
     private void buildStatement(Loan loan, PreparedStatement statement) throws SQLException {
         statement.setInt(1, loan.getBook_id());
         statement.setString(2, loan.getPatron_username());
-        statement.setDate(3, loan.getStart_date());
-        statement.setDate(4, loan.getDue_date());
+        statement.setObject(3, loan.getStart_date());
+        statement.setObject(4, loan.getDue_date());
         statement.setDouble(5, loan.getFine());
     }
 
@@ -202,8 +206,8 @@ public class LoanDaoImpl implements LoanDao {
         Loan loan = new Loan(
                 rs.getInt("book_id"),
                 rs.getString("patron_username"),
-                rs.getDate("start_date"),
-                rs.getDate("due_date"),
+                rs.getDate("start_date").toLocalDate(),
+                rs.getDate("due_date").toLocalDate(),
                 rs.getInt("fine"));
         return loan;
     }

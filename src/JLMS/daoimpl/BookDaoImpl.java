@@ -297,7 +297,10 @@ public class BookDaoImpl implements BookDao {
         try (Connection conn = DBConn.getConnection();
              PreparedStatement statement = conn.prepareStatement("DELETE FROM BOOK WHERE ID = ?")
         ) {
+            conn.setAutoCommit(false);
             statement.setLong(1, book.getId());
+            int rows_affected = statement.executeUpdate();
+            if (rows_affected == 0) System.out.println("Not found!");
             conn.commit();
         } catch (SQLException e) {
             System.out.println(e);

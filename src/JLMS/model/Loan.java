@@ -1,18 +1,18 @@
 package JLMS.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Loan {
     private int book_id;
     private String patron_username;
-    private Date start_date;
-    private Date due_date;
+    private LocalDate start_date;
+    private LocalDate due_date;
     private double fine;
 
     public Loan() {
     }
 
-    public Loan(int book_id, String patron_username, Date start_date, Date due_date, double fine) {
+    public Loan(int book_id, String patron_username, LocalDate start_date, LocalDate due_date, double fine) {
         this.book_id = book_id;
         this.patron_username = patron_username;
         this.start_date = start_date;
@@ -36,19 +36,19 @@ public class Loan {
         this.patron_username = patron_username;
     }
 
-    public Date getStart_date() {
+    public LocalDate getStart_date() {
         return start_date;
     }
 
-    public void setStart_date(Date start_date) {
+    public void setStart_date(LocalDate start_date) {
         this.start_date = start_date;
     }
 
-    public Date getDue_date() {
+    public LocalDate getDue_date() {
         return due_date;
     }
 
-    public void setDue_date(Date due_date) {
+    public void setDue_date(LocalDate due_date) {
         this.due_date = due_date;
     }
 

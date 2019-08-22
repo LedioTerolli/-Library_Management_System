@@ -12,6 +12,8 @@ public class PatronDaoImpl implements PatronDao {
     public PatronDaoImpl() throws SQLException {
     }
 
+    //----------------------- GET ----------------------------------------------------------------
+
     @Override
     public List getAll() throws Exception {
         List<Patron> patronList = new ArrayList<>();
@@ -243,7 +245,10 @@ public class PatronDaoImpl implements PatronDao {
         try (Connection conn = DBConn.getConnection();
              PreparedStatement statement = conn.prepareStatement("DELETE FROM PATRON WHERE USERNAME = ?")
         ) {
+            conn.setAutoCommit(false);
             statement.setString(1, patron.getUsername());
+            int rows_affected = statement.executeUpdate();
+            if (rows_affected == 0) System.out.println("Not found!");
             conn.commit();
         } catch (SQLException e) {
             System.out.println(e);
@@ -258,7 +263,7 @@ public class PatronDaoImpl implements PatronDao {
         statement.setString(3, patron.getLast_name());
         statement.setString(4, patron.getEmail());
         statement.setString(5, patron.getPassword());
-        statement.setDate(6, patron.getDob());
+        statement.setObject(6, patron.getDob());
 
     }
 
@@ -269,7 +274,7 @@ public class PatronDaoImpl implements PatronDao {
                 rs.getString("last_name"),
                 rs.getString("email"),
                 rs.getString("password"),
-                rs.getDate("dob"));
+                rs.getDate("dob").toLocalDate());
         return patron;
     }
 

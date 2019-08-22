@@ -9,7 +9,9 @@ import JLMS.model.Employee;
 import JLMS.model.Patron;
 import misc.CreateBookList;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.time.*;
 
 public class RunTest {
     public static void main(String[] args) throws Exception {
@@ -62,16 +64,24 @@ public class RunTest {
         for (Patron e: result) {
             System.out.println(e);
         }
+
+
+        List<Employee> list =  new EmployeeDaoImpl().getBySuper_id(2);
+        for (Employee e: list) System.out.println(e);
+
+
 */
 
-        EmployeeDao employee = new EmployeeDaoImpl();
-        List<Employee> list = employee.getBySuper_id(2);
-        for (Employee e: list) System.out.println(e);
+        LocalDate date2 = LocalDate.of(1998, 7, 30);
+        //new EmployeeDaoImpl().add(new Employee(11,"Jim", "Halpert", date2, "M", 80000, 2,101));
+
+        new EmployeeDaoImpl().delete(new Employee(11,"Jim", "Halpert", date2, "M", 80000, 2,101));
 
         long endTime = System.nanoTime();
         long totalTime = endTime - startTime;
         double ftime = totalTime/1000000000.0;
         System.out.println(ftime + "sec.");
+
     }
 
     public void listStats(List<Book> bookList) {

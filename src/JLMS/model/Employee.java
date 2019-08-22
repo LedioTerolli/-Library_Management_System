@@ -1,12 +1,12 @@
 package JLMS.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Employee {
     private int emp_id;
     private String first_name;
     private String last_name;
-    private Date dob;
+    private LocalDate dob;
     private String sex;
     private int salary;
     private int super_id;
@@ -15,7 +15,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(int emp_id, String first_name, String last_name, Date dob, String sex, int salary, int super_id, int branch_id) {
+    public Employee(int emp_id, String first_name, String last_name, LocalDate dob, String sex, int salary, int super_id, int branch_id) {
         this.emp_id = emp_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -50,11 +50,11 @@ public class Employee {
         this.last_name = last_name;
     }
 
-    public Date getDob() {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 

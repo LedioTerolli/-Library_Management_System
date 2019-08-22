@@ -1,6 +1,6 @@
 package JLMS.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Patron {
     private String username;
@@ -8,12 +8,12 @@ public class Patron {
     private String last_name;
     private String email;
     private String password;
-    private Date dob;
+    private LocalDate dob;
 
     public Patron() {
     }
 
-    public Patron(String username, String first_name, String last_name, String email, String password, Date dob) {
+    public Patron(String username, String first_name, String last_name, String email, String password, LocalDate dob) {
         this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -62,11 +62,11 @@ public class Patron {
         this.password = password;
     }
 
-    public Date getDob() {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 

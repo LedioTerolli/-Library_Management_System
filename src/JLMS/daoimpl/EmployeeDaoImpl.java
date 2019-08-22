@@ -15,6 +15,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
     public EmployeeDaoImpl() {
     }
 
+    //----------------------- GET ----------------------------------------------------------------
+
     @Override
     public List getAll() throws Exception {
         List<Employee> employeeList = new ArrayList<>();
@@ -218,8 +220,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
         try (Connection conn = DBConn.getConnection();
              PreparedStatement statement = conn.prepareStatement("DELETE FROM EMPLOYEE WHERE emp_id = ?")
         ) {
+            conn.setAutoCommit(false);
             statement.setInt(1, employee.getEmp_id());
-            statement.executeUpdate();
+            int rows_affected = statement.executeUpdate();
+            if (rows_affected == 0) System.out.println("Not found!");
             conn.commit();
         } catch (SQLException e) {
             System.out.println(e);
@@ -232,7 +236,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         statement.setInt(1, employee.getEmp_id());
         statement.setString(2, employee.getFirst_name());
         statement.setString(3, employee.getLast_name());
-        statement.setDate(4, employee.getDob());
+        statement.setObject(4, employee.getDob());
         statement.setString(5, employee.getSex());
         statement.setInt(6, employee.getSalary());
         statement.setInt(7, employee.getSuper_id());
@@ -246,7 +250,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 rs.getInt("emp_id"),
                 rs.getString("first_name"),
                 rs.getString("last_name"),
-                rs.getDate("dob"),
+                rs.getDate("dob").toLocalDate(),
                 rs.getString("sex"),
                 rs.getInt("salary"),
                 rs.getInt("super_id"),

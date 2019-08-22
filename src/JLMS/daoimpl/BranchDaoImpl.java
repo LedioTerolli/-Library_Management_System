@@ -15,6 +15,8 @@ public class BranchDaoImpl implements BranchDao {
 
     public BranchDaoImpl() {}
 
+    //----------------------- GET ----------------------------------------------------------------
+
     @Override
     public List getAll() throws Exception {
         List<Branch> branchList = new ArrayList<>();
@@ -143,8 +145,10 @@ public class BranchDaoImpl implements BranchDao {
         try (Connection conn = DBConn.getConnection();
              PreparedStatement statement = conn.prepareStatement("DELETE FROM BRANCH WHERE branch_id = ?")
         ) {
+            conn.setAutoCommit(false);
             statement.setInt(1, branch.getBranch_id());
-            statement.executeUpdate();
+            int rows_affected = statement.executeUpdate();
+            if (rows_affected == 0) System.out.println("Not found!");
             conn.commit();
         } catch (SQLException e) {
             System.out.println(e);

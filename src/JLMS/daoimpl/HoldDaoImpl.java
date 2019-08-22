@@ -15,6 +15,8 @@ public class HoldDaoImpl implements HoldDao {
     public HoldDaoImpl() {
     }
 
+    //----------------------- GET ----------------------------------------------------------------
+
     @Override
     public List getAll() throws Exception {
 
@@ -184,9 +186,11 @@ public class HoldDaoImpl implements HoldDao {
         try (Connection conn = DBConn.getConnection();
              PreparedStatement statement = conn.prepareStatement("DELETE FROM HOLD WHERE book_id = ? and patron_username = ? ")
         ) {
+            conn.setAutoCommit(false);
             statement.setLong(1, hold.getBook_id());
             statement.setString(2, hold.getPatron_username());
-            statement.executeUpdate();
+            int rows_affected = statement.executeUpdate();
+            if (rows_affected == 0) System.out.println("Not found!");
             conn.commit();
         } catch (SQLException e) {
             System.out.println(e);
@@ -198,14 +202,14 @@ public class HoldDaoImpl implements HoldDao {
     private void buildStatement(Hold hold, PreparedStatement statement) throws SQLException {
         statement.setLong(1, hold.getBook_id());
         statement.setString(2, hold.getPatron_username());
-        statement.setDate(3, hold.getStart_date());
+        statement.setObject(3, hold.getStart_date());
     }
 
     private Hold extractHold(ResultSet rs) throws SQLException {
         Hold hold = new Hold(
                 rs.getLong("book_id"),
                 rs.getString("patron_username"),
-                rs.getDate("start_date")
+                rs.getDate("start_date").toLocalDate()
         );
 
         return hold;
