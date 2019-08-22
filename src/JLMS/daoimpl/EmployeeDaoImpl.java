@@ -17,9 +17,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public List getAll() throws Exception {
-        List<Employee> patronList = new ArrayList<>();
+        List<Employee> employeeList = new ArrayList<>();
         ResultSet rs;
-        Employee currentPatron;
+        Employee currentEmployee;
 
         try (Connection conn = DBConn.getConnection();
              PreparedStatement statement = conn.prepareStatement("SELECT * FROM employee")
@@ -29,18 +29,18 @@ public class EmployeeDaoImpl implements EmployeeDao {
             rs = statement.getResultSet();
             if (!rs.isBeforeFirst()) {
                 System.out.println("No data found!");
-                return patronList;
+                return employeeList;
             } else {
                 while (rs.next()) {
-                    currentPatron = extractEmployee(rs);
-                    patronList.add(currentPatron);
+                    currentEmployee = extractEmployee(rs);
+                    employeeList.add(currentEmployee);
                 }
             }
             conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return patronList;
+        return employeeList;
     }
 
     @Override
@@ -219,6 +219,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
              PreparedStatement statement = conn.prepareStatement("DELETE FROM EMPLOYEE WHERE emp_id = ?")
         ) {
             statement.setInt(1, employee.getEmp_id());
+            statement.executeUpdate();
             conn.commit();
         } catch (SQLException e) {
             System.out.println(e);
