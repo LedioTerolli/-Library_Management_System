@@ -14,7 +14,7 @@ public interface BookDao extends GenericDao {
 
     List<Book> getByCategory(String category) throws Exception;
 
-    List<Book> getByBranch(String branch) throws Exception;
+    List<Book> getByBranch(int branch_id) throws Exception;
 
     List<Book> getByAvailable() throws Exception;
 

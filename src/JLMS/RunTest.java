@@ -1,9 +1,11 @@
 package JLMS;
 
 import JLMS.dao.BookDao;
+import JLMS.dao.EmployeeDao;
 import JLMS.dao.PatronDao;
 import JLMS.daoimpl.*;
 import JLMS.model.Book;
+import JLMS.model.Employee;
 import JLMS.model.Patron;
 import misc.CreateBookList;
 
@@ -53,13 +55,18 @@ public class RunTest {
         for (Patron e: result) {
             System.out.println(e);
         }
-*/
+
 
         PatronDao patronDao = new PatronDaoImpl();
         List<Patron> result = patronDao.getByFirst_name("Ashley");
         for (Patron e: result) {
             System.out.println(e);
         }
+*/
+
+        EmployeeDao employee = new EmployeeDaoImpl();
+        List<Employee> list = employee.getBySuper_id(2);
+        for (Employee e: list) System.out.println(e);
 
         long endTime = System.nanoTime();
         long totalTime = endTime - startTime;

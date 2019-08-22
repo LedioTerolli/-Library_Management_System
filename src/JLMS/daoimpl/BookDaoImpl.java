@@ -161,7 +161,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> getByBranch(String branch) throws Exception {
+    public List<Book> getByBranch(int branch_id) throws Exception {
         ResultSet rs;
         Book currentBook;
         List<Book> bookList = new ArrayList<>();
@@ -170,7 +170,7 @@ public class BookDaoImpl implements BookDao {
                 PreparedStatement ps = conn.prepareStatement("SELECT * FROM book WHERE branch_id = ?")
         ) {
             conn.setAutoCommit(false);
-            ps.setString(1, branch);
+            ps.setInt(1, branch_id);
             ps.execute();
             rs = ps.getResultSet();
 
