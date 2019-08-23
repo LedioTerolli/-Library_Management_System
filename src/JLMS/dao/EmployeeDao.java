@@ -14,4 +14,5 @@ public interface EmployeeDao extends GenericDao {
 
     List<Employee> getByBranch_id(int branch_id) throws Exception;
 
+    int getAge (int emp_id) throws Exception;
 }

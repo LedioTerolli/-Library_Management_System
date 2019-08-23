@@ -19,8 +19,6 @@ public class HoldDaoImpl implements HoldDao {
 
     @Override
     public List getAll() throws Exception {
-
-
         List<Hold> holdList = new ArrayList<>();
         ResultSet rs;
         Hold currentHold;

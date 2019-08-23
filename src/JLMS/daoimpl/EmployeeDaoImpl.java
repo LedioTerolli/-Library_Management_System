@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -161,7 +162,36 @@ public class EmployeeDaoImpl implements EmployeeDao {
             System.out.println(e);
         }
 
-        return employeeList;    }
+        return employeeList;
+    }
+
+    @Override
+    public int getAge (int emp_id) throws Exception {
+        ResultSet rs;
+        Employee foundEmployee = null;
+        int age = 0;
+
+        try (Connection conn = DBConn.getConnection();
+             PreparedStatement statement = conn.prepareStatement("SELECT TIMESTAMPDIFF(YEAR, (SELECT DOB FROM EMPLOYEE WHERE emp_id = ?), CURDATE()) AS age");
+        ) {
+            conn.setAutoCommit(false);
+            statement.setInt(1, emp_id);
+            statement.execute();
+            rs = statement.getResultSet();
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No results.");
+                return age;
+            } else {
+                rs.next();
+                age = rs.getInt("age");
+            }
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return age;
+    }
 
 
     //----------------------- ADD ---------------------------------------------------------------

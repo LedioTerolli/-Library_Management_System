@@ -70,12 +70,15 @@ public class RunTest {
         for (Employee e: list) System.out.println(e);
 
 
-*/
+
 
         LocalDate date2 = LocalDate.of(1998, 7, 30);
         //new EmployeeDaoImpl().add(new Employee(11,"Jim", "Halpert", date2, "M", 80000, 2,101));
 
         new EmployeeDaoImpl().delete(new Employee(11,"Jim", "Halpert", date2, "M", 80000, 2,101));
+*/
+
+        System.out.println(new EmployeeDaoImpl().getAge(1));
 
         long endTime = System.nanoTime();
         long totalTime = endTime - startTime;

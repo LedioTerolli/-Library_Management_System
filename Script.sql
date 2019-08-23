@@ -5,6 +5,16 @@ SELECT * FROM BRANCH;
 SELECT * FROM LOAN;
 SELECT * FROM HOLD;
 
+alter table loan
+change start_date start_date DATE;
+
+SELECT TIMESTAMPDIFF(YEAR, (select DOB from employee where emp_id = 1), CURDATE()) AS age
+
+
+select current_timestamp() as td;
+
+SELECT UNIX_TIMESTAMP() - UNIX_TIMESTAMP('2019-08-23 13:05:00');
+
 select branch_name from branch
 where branch.branch_id in (
 	select branch_id from book
@@ -41,13 +51,15 @@ CREATE TABLE PATRON (
 CREATE TABLE LOAN (
 	BOOK_ID BIGINT,
     PATRON_USERNAME VARCHAR (40),
-    START_DATE DATE,
-    DUE_DATE DATE,
+    START_DATE DATETIME,
+    DUE_DATE DATETIME,
     FINE DECIMAL (6,2),
     PRIMARY KEY(BOOK_ID),
     FOREIGN KEY(BOOK_ID) REFERENCES BOOK(ID) ON DELETE CASCADE,
 	FOREIGN KEY(PATRON_USERNAME) REFERENCES PATRON(USERNAME) ON DELETE SET NULL
 );
+
+
 
 CREATE TABLE HOLD (
 	BOOK_ID BIGINT,

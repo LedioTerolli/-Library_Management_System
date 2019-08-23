@@ -1,6 +1,8 @@
 package JLMS.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 
 public class Loan {
     private int book_id;
@@ -10,6 +12,14 @@ public class Loan {
     private double fine;
 
     public Loan() {
+    }
+
+    public Loan(int book_id, String patron_username, LocalDate start_date) {
+        this.book_id = book_id;
+        this.patron_username = patron_username;
+        this.start_date = start_date;
+        this.due_date = this.start_date.plusDays(21);
+        this.fine = 0;
     }
 
     public Loan(int book_id, String patron_username, LocalDate start_date, LocalDate due_date, double fine) {

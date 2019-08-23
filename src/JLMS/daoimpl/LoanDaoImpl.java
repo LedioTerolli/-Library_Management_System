@@ -5,6 +5,9 @@ import JLMS.dao.LoanDao;
 import JLMS.model.Loan;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,9 +104,9 @@ public class LoanDaoImpl implements LoanDao {
     }
 
     @Override
-    public List<Loan> getByDue_date(Date due_date) throws Exception {
+    public List<Loan> getByDue_date(LocalDate due_date) throws Exception {
 
-        ResultSet rs = null;
+        ResultSet rs;
         Loan currentLoan = null;
         List<Loan> loanList = new ArrayList<>();
         try (
@@ -111,7 +114,7 @@ public class LoanDaoImpl implements LoanDao {
                 PreparedStatement ps = conn.prepareStatement("SELECT * FROM LOAN WHERE due_date = ?")
         ) {
             conn.setAutoCommit(false);
-            ps.setDate(1, due_date);
+            ps.setObject(1, due_date);
             ps.execute();
             rs = ps.getResultSet();
 
@@ -171,7 +174,36 @@ public class LoanDaoImpl implements LoanDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public void updateAllFine () throws Exception {
+        ResultSet rs;
+        double fine = 0;
+        try (Connection conn = DBConn.getConnection();
+             PreparedStatement statementFine = conn.prepareStatement("SELECT * FROM LOAN")
+
+        ) {
+            conn.setAutoCommit(false);
+            statementFine.execute();
+            rs = statementFine.getResultSet();
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No results.");
+            } else {
+                while (rs.next()) {
+                    LocalDate due_date = rs.getDate("due_date").toLocalDate();
+                    LocalDate today = LocalDate.now();
+                    Period period = Period.between(due_date,today);
+                    fine = period.getDays() * 0.1;
+                    rs.updateDouble("fine", fine);
+                    rs.updateRow();
+                }
+            }
+
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     //----------------------- DELETE -------------------------------------------------------------
@@ -195,6 +227,8 @@ public class LoanDaoImpl implements LoanDao {
     //----------------------- HELPER METHODS -----------------------------------------------------
 
     private void buildStatement(Loan loan, PreparedStatement statement) throws SQLException {
+
+
         statement.setInt(1, loan.getBook_id());
         statement.setString(2, loan.getPatron_username());
         statement.setObject(3, loan.getStart_date());
@@ -211,4 +245,6 @@ public class LoanDaoImpl implements LoanDao {
                 rs.getInt("fine"));
         return loan;
     }
+
+
 }
