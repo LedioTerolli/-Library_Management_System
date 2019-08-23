@@ -6,8 +6,9 @@ import JLMS.model.Loan;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
+
+import static java.time.temporal.ChronoUnit.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,7 +147,7 @@ public class LoanDaoImpl implements LoanDao {
             statement.executeUpdate();
             conn.commit();
         } catch (SQLException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -177,24 +178,21 @@ public class LoanDaoImpl implements LoanDao {
     }
 
     @Override
-    public void updateAllFine () throws Exception {
+    public void updateAllFine() throws Exception {
         ResultSet rs;
         double fine = 0;
         try (Connection conn = DBConn.getConnection();
-             PreparedStatement statementFine = conn.prepareStatement("SELECT * FROM LOAN")
-
+             Statement statementFine = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)
         ) {
             conn.setAutoCommit(false);
-            statementFine.execute();
-            rs = statementFine.getResultSet();
+            rs = statementFine.executeQuery("SELECT * FROM LOAN");
             if (!rs.isBeforeFirst()) {
                 System.out.println("No results.");
             } else {
                 while (rs.next()) {
                     LocalDate due_date = rs.getDate("due_date").toLocalDate();
                     LocalDate today = LocalDate.now();
-                    Period period = Period.between(due_date,today);
-                    fine = period.getDays() * 0.1;
+                    fine =  DAYS.between(due_date, today) * 0.1;
                     rs.updateDouble("fine", fine);
                     rs.updateRow();
                 }

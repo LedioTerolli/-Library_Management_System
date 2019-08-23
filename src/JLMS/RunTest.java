@@ -6,12 +6,14 @@ import JLMS.dao.PatronDao;
 import JLMS.daoimpl.*;
 import JLMS.model.Book;
 import JLMS.model.Employee;
+import JLMS.model.Loan;
 import JLMS.model.Patron;
 import misc.CreateBookList;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.time.*;
+import static java.time.temporal.ChronoUnit.*;
 
 public class RunTest {
     public static void main(String[] args) throws Exception {
@@ -76,13 +78,25 @@ public class RunTest {
         //new EmployeeDaoImpl().add(new Employee(11,"Jim", "Halpert", date2, "M", 80000, 2,101));
 
         new EmployeeDaoImpl().delete(new Employee(11,"Jim", "Halpert", date2, "M", 80000, 2,101));
+
+        //------------------------------------------------------------------------------------------------------
 */
 
-        System.out.println(new EmployeeDaoImpl().getAge(1));
+        //System.out.println(new EmployeeDaoImpl().getAge(1));
+
+
+        //new LoanDaoImpl().add(new Loan(72628331,"bendecotth", date));
+        //new LoanDaoImpl().delete(new Loan(72628331,"bendecotth", date));
+
+        new LoanDaoImpl().updateAllFine();
+        LocalDate date = LocalDate.of(2019, 1, 30);
+        LocalDate today = LocalDate.now();
+
+        System.out.println(DAYS.between(date, today));
 
         long endTime = System.nanoTime();
         long totalTime = endTime - startTime;
-        double ftime = totalTime/1000000000.0;
+        double ftime = totalTime / 1000000000.0;
         System.out.println(ftime + "sec.");
 
     }
@@ -113,4 +127,5 @@ public class RunTest {
         System.out.println("more: " + more);
         System.out.println("average: " + sum * 1.0 / i);
     }
+
 }
