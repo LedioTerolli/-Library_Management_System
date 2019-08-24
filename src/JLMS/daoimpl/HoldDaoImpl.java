@@ -209,7 +209,6 @@ public class HoldDaoImpl implements HoldDao {
                 rs.getString("patron_username"),
                 rs.getDate("start_date").toLocalDate()
         );
-
         return hold;
     }
 }

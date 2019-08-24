@@ -60,33 +60,24 @@ public class RunTest {
             System.out.println(e);
         }
 
-
         PatronDao patronDao = new PatronDaoImpl();
         List<Patron> result = patronDao.getByFirst_name("Ashley");
         for (Patron e: result) {
             System.out.println(e);
         }
 
-
         List<Employee> list =  new EmployeeDaoImpl().getBySuper_id(2);
         for (Employee e: list) System.out.println(e);
-
-
-
 
         LocalDate date2 = LocalDate.of(1998, 7, 30);
         //new EmployeeDaoImpl().add(new Employee(11,"Jim", "Halpert", date2, "M", 80000, 2,101));
 
         new EmployeeDaoImpl().delete(new Employee(11,"Jim", "Halpert", date2, "M", 80000, 2,101));
 
-        //------------------------------------------------------------------------------------------------------
+        System.out.println(new EmployeeDaoImpl().getAge(1));
+        new LoanDaoImpl().add(new Loan(72628331,"bendecotth", date));
+        new LoanDaoImpl().delete(new Loan(72628331,"bendecotth", date));
 */
-
-        //System.out.println(new EmployeeDaoImpl().getAge(1));
-
-
-        //new LoanDaoImpl().add(new Loan(72628331,"bendecotth", date));
-        //new LoanDaoImpl().delete(new Loan(72628331,"bendecotth", date));
 
         new LoanDaoImpl().updateAllFine();
         LocalDate date = LocalDate.of(2019, 1, 30);

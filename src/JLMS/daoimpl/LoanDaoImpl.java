@@ -4,11 +4,10 @@ import JLMS.DBConn;
 import JLMS.dao.LoanDao;
 import JLMS.model.Loan;
 
-import java.sql.*;
-import java.time.LocalDate;
-
 import static java.time.temporal.ChronoUnit.*;
 
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -192,7 +191,7 @@ public class LoanDaoImpl implements LoanDao {
                 while (rs.next()) {
                     LocalDate due_date = rs.getDate("due_date").toLocalDate();
                     LocalDate today = LocalDate.now();
-                    fine =  DAYS.between(due_date, today) * 0.1;
+                    fine = DAYS.between(due_date, today) * 0.1;
                     rs.updateDouble("fine", fine);
                     rs.updateRow();
                 }
@@ -243,6 +242,4 @@ public class LoanDaoImpl implements LoanDao {
                 rs.getInt("fine"));
         return loan;
     }
-
-
 }
